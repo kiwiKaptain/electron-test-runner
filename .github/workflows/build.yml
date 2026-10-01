@@ -40,7 +40,7 @@ jobs:
             - name: Force Playwright to Install Browsers into Specific Folder
               env:
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: npx playwright install chromimum
+              run: npx playwright install chromium
 
             # Step 4: Bundle and Publish everything
             - name: Compile and Publish to GitHub Releases
