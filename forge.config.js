@@ -6,10 +6,10 @@ const fs = require("node:fs");
 module.exports = {
     packagerConfig: {
         asar: true,
-        ignore: [/test-runtime\/workspace/],
+        ignore: [/test-runtime\/workspace/, /^\/bin($|\/)/],
         extraResource: [
             path.resolve(__dirname, "test-runtime"),
-            "./bin/node.exe",
+            path.resolve(__dirname, "bin/node.exe"),
         ],
         afterCopyExtraResources: [
             (buildPath, electronVersion, platform, arch, done) => {
