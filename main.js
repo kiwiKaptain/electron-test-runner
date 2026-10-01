@@ -4,55 +4,57 @@ const fs = require("node:fs");
 const { spawn } = require("node:child_process");
 const dotenv = require("dotenv");
 
-const rootAppPath = app.getAppPath();
+// 1. Core structural roots must be calculated first
+const isPackaged = app.isPackaged;
 
-// const testRuntimePath = path.join(process.resourcesPath, "test-runtime");
-const testRepoUrl = `https://github.com/kiwiKaptain/playwright-tests.git`;
-const testProjectsPath = path.join(app.getPath("userData"), "test-projects");
-const testProjectPath = path.join(testProjectsPath, "playwright-tests");
-
-const testRuntimePath = app.isPackaged
+const testRuntimePath = isPackaged
     ? path.join(process.resourcesPath, "test-runtime")
     : path.join(__dirname, "test-runtime");
 
-const envPath = app.isPackaged
-    ? path.join(process.resourcesPath, "test-runtime", ".env")
-    : path.resolve(process.cwd(), "test-runtime", ".env");
+const nodeExecutable = isPackaged
+    ? path.join(process.resourcesPath, "node.exe")
+    : path.join(__dirname, "bin", "node.exe"); // Changed from rootAppPath to __dirname for consistency
 
-// 2. Load the file
+const envPath = isPackaged
+    ? path.join(testRuntimePath, ".env")
+    : path.join(testRuntimePath, ".env"); // Simplified to match clean hierarchy
+
+// 2. Load environment variables
 dotenv.config({ path: envPath });
 
 console.log("=========================================");
 console.log("Electron Main Bootstrapped Environment:");
 console.log("Searching for .env file at:", envPath);
-console.log("Loaded BASE_URL:", process.env.BASE_URL); // This should now log your real string!
+console.log("Loaded BASE_URL:", process.env.BASE_URL);
 console.log("=========================================");
 
-// const nodeExecutable = path.join(testRuntimePath, "bin", "node.exe");
+// 3. User Data Space (Dynamic Git Clone Directories)
+const testRepoUrl = `https://github.com/kiwiKaptain/playwright-tests.git`;
+const testProjectsPath = path.join(app.getPath("userData"), "test-projects");
+const testProjectPath = path.join(testProjectsPath, "playwright-tests");
 
-const nodeExecutable = app.isPackaged
-    ? path.join(process.resourcesPath, "node.exe")
-    : path.join(rootAppPath, "bin", "node.exe");
-
+// 4. Secondary folders (Inheriting testRuntimePath cleanly)
+// FIX: Swapped to the production global orchestrator entry point file
 const playwrightCli = path.join(
     testRuntimePath,
     "node_modules",
-    "@playwright",
-    "test",
+    "playwright",
     "cli.js",
 );
+
 const runtimeWorkspacePath = path.join(testRuntimePath, "workspace");
 const playwrightReportPath = path.join(
     runtimeWorkspacePath,
     "playwright-report",
 );
+const browsersPath = path.join(testRuntimePath, "playwright-browsers");
+const runtimeConfigPath = path.join(testRuntimePath, "playwright.config.ts");
+
 const reporterPath = path.join(
     testRuntimePath,
     "reporters",
     "electron-reporter.js",
 );
-const browsersPath = path.join(testRuntimePath, "playwright-browsers");
-const runtimeConfigPath = path.join(testRuntimePath, "playwright.config.ts");
 
 let mainWindow;
 let testProcess = null;
