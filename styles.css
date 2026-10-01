@@ -1,0 +1,679 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.app-header {
+    position: sticky;
+    top: 12px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1160px;
+    width: 96%;
+    margin: 0 auto;
+    min-height: 64px;
+    padding: 10px 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 600;
+    color: #111827;
+}
+
+#test-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 9px;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 500;
+    color: #6b7280;
+    background: #f3f4f6;
+    border-radius: 999px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn {
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #f5f7f8;
+}
+
+
+
+
+.btn-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+    color: #a83f3f !important;
+}
+
+.stop-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+
+.settings-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+#eyeIcon, #passwordIcon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+}
+
+main {
+    padding: 24px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+#run-status {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.test-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 14px;
+    justify-content: space-between;
+}
+
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    height: 36px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.search-input-wrapper:hover {
+    border-color: #9ca3af;
+    box-shadow: 0 0 0 3px rgba(145, 155, 177, 0.1);
+}
+
+.search-input-wrapper:focus-within {
+    border-color: #7fa8ff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    color: #9ca3af;
+    font-size: 18px;
+}
+
+#test-search {
+    flex: 1;
+    height: 100%;
+    padding: 0 8px 0 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #111827;
+    font-size: 14px;
+}
+
+#test-search::placeholder {
+    color: #9ca3af;
+}
+
+.clear-search {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #6b7280;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.clear-search:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.search-result-count {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#tests-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.test-group {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.test-group-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 42px;
+    padding: 0 12px;
+    background: #eef0f3;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.test-group-header:hover {
+    background: #e6e8eb;
+    border-color: #c9cdd2;
+}
+
+.group-checkbox {
+    cursor: pointer;
+}
+
+.collapse-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: 0;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 11px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.collapse-button:hover {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.test {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 14px 8px 34px;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+.test:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.test-checkbox {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.test-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.test-title {
+    display: block;
+    font-size: 15px;
+    /* font-weight: 600; */
+    color: #111827;
+}
+
+.test-status {
+    min-width: 110px;
+    text-align: right;
+    font-size: 12px;
+    /* font-weight: 600; */
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-badge {
+    /* color: white; */
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Status dot */
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* NOT RUN */
+.status-not-run {
+    color: #6b7280;
+}
+
+/* .status-not-run .status-dot {
+    background: #9ca3af;
+} */
+
+.status-not-run .status-badge {
+    background: #f3f4f6;
+}
+
+/* RUNNING */
+
+.status-running {
+    color: #4483ff;
+}
+
+/* .status-running .status-dot {
+    background: #2563eb;
+    animation: pulse 1s infinite;
+} */
+
+.status-running .status-badge {
+    background: #c8daff;
+    animation: pulse 1s infinite;
+}
+
+/* PASSED */
+
+.status-passed {
+    color: #16a34a;
+}
+
+/* .status-passed .status-dot {
+    background: #16a34a;
+} */
+
+.status-passed .status-badge {
+    background: #c8ffdc;
+}
+
+/* FAILED */
+
+.status-failed {
+    color: #dc2626;
+}
+
+/* .status-failed .status-dot {
+    background: #dc2626;
+} */
+
+.status-failed .status-badge {
+    background: #ffbcbc;
+}
+
+/* STOPPED */
+
+.status-stopped {
+    color: #cb6d00;
+}
+
+/* .status-stopped .status-dot {
+    background: #d97706;
+} */
+
+.status-stopped .status-badge {
+    background: #fde4c7;
+}
+
+.empty {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* .dialog-box {
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+} */
+
+/* 1. Target the custom dialog container class */
+.dialog-box {
+    border: none; /* Kills the default browser black border */
+    outline: none; /* Kills focus outlines */
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.1),
+        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    /* font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; */
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Modifies the background layer overlay when the dialog is active */
+.dialog-box::backdrop {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0.5px);
+}
+
+.dialog-box h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #111827;
+    font-size: 18px;
+}
+
+/* 2. Standard Layout Groupings */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+
+/* 3. Reusable Input Field Elements */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 36px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: #7fa8ff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 12px;
+    font-size: 12px;
+    color: #1f2937;
+    box-sizing: border-box;
+}
+
+/* Styling targets for the native select element within the wrapper */
+.input-wrapper select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 36px 0 12px; /* Extra padding on the right side for the dropdown arrow */
+    font-size: 14px;
+    color: #1f2937;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none; /* Hides default native OS browser arrow */
+    -webkit-appearance: none;
+}
+
+/* Custom SVG Dropdown Arrow positioned within the flex box container */
+.select-wrapper::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: calc(50% - 3px);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #6b7280; /* Elegant grey chevron tint */
+    pointer-events: none; /* Prevents arrow blockages when user clicks */
+}
+
+/* Changes placeholder color option when unselected */
+.input-wrapper select:invalid {
+    color: #9ca3af;
+}
+
+/* 4. Action Utility Buttons */
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* .btn {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease;
+} */
+
+.btn-secondary {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border: none;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* 1. Establish positioning context for any element with a tooltip */
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+}
+
+/* 2. Create the hidden Tooltip Box */
+[data-tooltip]::after {
+    content: attr(data-tooltip); /* Grabs the text dynamically from HTML */
+    position: absolute;
+    top: calc(100% + 4px); /* Positions it exactly 8px above the button */
+    left: 50%;
+    transform: translateX(-50%) scale(0.95); /* Centers it horizontally and starts slightly shrunk */
+
+    /* Styling */
+    background: #1f2937; /* Sleek dark slate tint */
+    color: #ffffff;
+    font-size: 12px;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 400;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap; /* Keeps text on a single clean line */
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    /* Animation Properties */
+    opacity: 0;
+    pointer-events: none; /* Prevents tooltip from interfering with mouse clicks */
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+}
+
+/* 3. Reveal and animate the tooltip on Hover */
+[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1); /* Smooth spring up animation scaling to full size */
+}
+
+/* OPTIONAL: Adjust Tooltip Position for Dialog Action Footer Buttons */
+/* Puts the tooltip BELOW the dialog buttons instead of above, so it doesn't clip outside the dialog bounds */
+.settings-button [data-tooltip]::after {
+    bottom: auto;
+    top: calc(100% + 8px);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* @media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+} */

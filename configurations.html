@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <body>
+        <h3>Enter Details</h3>
+        <form id="inputForm">
+            <label>Username: <input type="text" id="username" required /></label
+            ><br /><br />
+            <label
+                >Password:
+                <input type="password" id="password" required /></label
+            ><br /><br />
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            document
+                .getElementById("inputForm")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const username = document.getElementById("username").value;
+                    const password = document.getElementById("password").value;
+
+                    // Use your contextBridge / ipcRenderer to send the data back
+                    window.electronAPI.sendData({ username, password });
+                    window.close(); // Close the dialog box automatically
+                });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+name: Build & Publish Electron App
+
+on:
+    push:
+        tags:
+            - "v*"
+
+jobs:
+    release:
+        runs-on: windows-latest
+
+        steps:
+            - name: Checkout Source Code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js Environment
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install Project Dependencies
+              run: npm install
+
+            - name: Download Standalone node.exe for Bundling
+              run: |
+                  mkdir bin
+                  # Fixed URL: Pulls the true x64 node.exe binary directly from the distribution archives
+                  curl -L https://nodejs.org -o bin/node.exe
+
+            - name: Force Playwright to Install Browsers into Specific Folder
+              env:
+                  PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
+              run: npx playwright install chrome --with-deps
+
+            - name: Compile and Publish to GitHub Releases
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
+              run: npm run publish
