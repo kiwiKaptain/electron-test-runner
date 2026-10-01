@@ -31,11 +31,13 @@ jobs:
                   cd test-runtime
                   npm install
 
-            # Step 3: Create bin folder in root and fetch the REAL x64 node.exe binary
+            # Step 3: Create bin folder and download the real, raw binary execution file
+            # Invoking a direct byte stream from the production mirror prevents file corruption
             - name: Download Standalone node.exe for Bundling
+              shell: powershell
               run: |
-                  mkdir bin
-                  curl -L https://nodejs.org -o bin/node.exe
+                  mkdir bin -Force
+                  Invoke-WebRequest -Uri "https://nodejs.org" -OutFile "bin/node.exe"
 
             # Step 4: Use working-directory parameter to let Playwright download Chromium safely inside its folder
             - name: Force Playwright to Install Browsers into Specific Folder
