@@ -1,7 +1,6 @@
 node_modules/
 out/
 modules/
-.env
 bin/node.exe
 test-runtime/workspace
 test-runtime/playwright-browsers
