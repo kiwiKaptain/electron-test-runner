@@ -49,17 +49,18 @@ module.exports = {
             config: {},
         },
     ],
-    // publishers: [
-    //     {
-    //         name: "@electron-forge/publisher-github",
-    //         config: {
-    //             repository: {
-    //                 owner: "your-github-username",
-    //                 name: "your-repository-name",
-    //             },
-    //         },
-    //     },
-    // ],
+    publishers: [
+        {
+            name: "@electron-forge/publisher-github",
+            config: {
+                repository: {
+                    owner: "kiwiKaptain",
+                    name: "electron-test-runner",
+                },
+                prerelease: true,
+            },
+        },
+    ],
     plugins: [
         {
             name: "@electron-forge/plugin-auto-unpack-natives",
