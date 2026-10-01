@@ -57,4 +57,12 @@ jobs:
             # Step 6: Compress the loose folder into a clean portable zip archive using PowerShell
             - name: Compress Loose Directory into Portable Zip
               run: Compress-Archive -Path "out/PlayWright Test Runner-win32-x64" -DestinationPath "out/PlayWright-Test-Runner-Portable.zip"
-                  
+
+            # Step 7: Post the portable zip file directly to your GitHub Releases tab
+            - name: Upload Portable Zip to GitHub Releases
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                  files: out/PlayWright-Test-Runner-Portable.zip
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
