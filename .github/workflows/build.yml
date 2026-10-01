@@ -37,7 +37,7 @@ jobs:
               shell: powershell
               run: |
                   mkdir bin -Force
-                  Invoke-WebRequest -Uri "https://nodejs.org" -OutFile "bin/node.exe"
+                  Copy-Item (Get-Command node).Source -Destination bin\node.exe
 
             # Step 4: Use working-directory parameter to let Playwright download Chromium safely inside its folder
             - name: Force Playwright to Install Browsers into Specific Folder
