@@ -45,8 +45,14 @@ jobs:
               run: npx playwright install chromium
 
             # Step 5: Bundle and Publish everything from the root folder
-            - name: Compile and Publish to GitHub Releases
+            # Runs your 'package' script to create the raw folder layout
+            # Compresses the loose compiled folder into a clean portable zip archive
+            # npm run publish # Triggers forge to pack and upload
+            - name: Compile Loose Application Directory
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Authenticated write token
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: npm run publish # Triggers forge to pack and upload
+              run: |
+                  npm run package
+                  Compress-Archive -Path "out/PlayWright Test Runner-win32-x64" -DestinationPath "out/PlayWright-Test-Runner-Portable.zip"
+                  
