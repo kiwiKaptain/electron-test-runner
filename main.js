@@ -28,11 +28,11 @@ console.log("Searching for .env file at:", envPath);
 console.log("Loaded BASE_URL:", process.env.BASE_URL); // This should now log your real string!
 console.log("=========================================");
 
-// const nodeExecutable = path.join(testRuntimePath, "node.exe");
+const nodeExecutable = path.join(testRuntimePath, "bin", "node.exe");
 
-const nodeExecutable = app.isPackaged
-    ? path.join(process.resourcesPath, "node.exe")
-    : path.join(rootAppPath, "bin", "node.exe");
+// const nodeExecutable = app.isPackaged
+//     ? path.join(process.resourcesPath, "node.exe")
+//     : path.join(rootAppPath, "bin", "node.exe");
 
 const playwrightCli = path.join(
     testRuntimePath,

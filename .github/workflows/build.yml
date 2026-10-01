@@ -9,6 +9,9 @@ jobs:
     release:
         runs-on: windows-latest # Compiles on a Windows server to perfectly package node.exe
 
+        permissions:
+            contents: write # Grants permission to create releases and upload files
+
         steps:
             - name: Checkout Source Code
               uses: actions/checkout@v4
@@ -22,34 +25,28 @@ jobs:
             - name: Install Dashboard (Root) Dependencies
               run: npm install
 
-            # Step 2: Navigate into test-runtime and install its specific dependencies
+            # Step 2: Navigate into test-runtime and install its dependencies in one fluid block
             - name: Install Test-Runtime Dependencies
               run: |
                   cd test-runtime
                   npm install
 
-            - name: Go To Base Directory
-              run: |
-                  cd ..
-
+            # Step 3: Create bin folder in root and fetch the REAL x64 node.exe binary
             - name: Download Standalone node.exe for Bundling
               run: |
                   mkdir bin
                   curl -L https://nodejs.org -o bin/node.exe
 
-            - name: Install Test-Runtime Dependencies
-              run: |
-                  cd test-runtime
-
-            # Step 3: Download Playwright Chrome into the target directory
+            # Step 4: Use working-directory parameter to let Playwright download Chromium safely inside its folder
             - name: Force Playwright to Install Browsers into Specific Folder
+              working-directory: ./test-runtime
               env:
-                  PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
+                  PLAYWRIGHT_BROWSERS_PATH: ./playwright-browsers
               run: npx playwright install chromium
 
-            # Step 4: Bundle and Publish everything
+            # Step 5: Bundle and Publish everything from the root folder
             - name: Compile and Publish to GitHub Releases
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Built-in GitHub token for auth
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Authenticated write token
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: npm run publish # Replaced make with publish so Electron Forge uploads to GitHub
+              run: npm run publish # Triggers forge to pack and upload
