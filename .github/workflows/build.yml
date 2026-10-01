@@ -52,7 +52,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Authenticated write token
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: |
-                  npm run package
-                  Compress-Archive -Path "out/PlayWright Test Runner-win32-x64" -DestinationPath "out/PlayWright-Test-Runner-Portable.zip"
+              run: npm run package
+
+            # Step 6: Compress the loose folder into a clean portable zip archive using PowerShell
+            - name: Compress Loose Directory into Portable Zip
+              run: Compress-Archive -Path "out/PlayWright Test Runner-win32-x64" -DestinationPath "out/PlayWright-Test-Runner-Portable.zip"
                   
