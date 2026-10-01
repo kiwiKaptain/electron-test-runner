@@ -3,11 +3,11 @@ name: Build & Publish Electron App
 on:
     push:
         tags:
-            - "v*"
+            - "v*" # Triggers the pipeline when you push v0.0.1, v1.0.0, etc.
 
 jobs:
     release:
-        runs-on: windows-latest
+        runs-on: windows-latest # Compiles on a Windows server to perfectly package node.exe
 
         steps:
             - name: Checkout Source Code
@@ -18,22 +18,33 @@ jobs:
               with:
                   node-version: 22
 
-            - name: Install Project Dependencies
+            # Step 1: Install root dependencies for your Electron dashboard
+            - name: Install Dashboard (Root) Dependencies
               run: npm install
+
+            # Step 2: Navigate into test-runtime and install its specific dependencies
+            - name: Install Test-Runtime Dependencies
+              run: |
+                  cd test-runtime
+                  npm install
+
+            - name: Go To Base Directory
+              run: cd ..
 
             - name: Download Standalone node.exe for Bundling
               run: |
                   mkdir bin
-                  # Fixed URL: Pulls the true x64 node.exe binary directly from the distribution archives
                   curl -L https://nodejs.org -o bin/node.exe
 
+            # Step 3: Download Playwright Chrome into the target directory
             - name: Force Playwright to Install Browsers into Specific Folder
               env:
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: npx playwright install chrome --with-deps
+              run: npx playwright install chromimum
 
+            # Step 4: Bundle and Publish everything
             - name: Compile and Publish to GitHub Releases
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Built-in GitHub token for auth
                   PLAYWRIGHT_BROWSERS_PATH: ./test-runtime/playwright-browsers
-              run: npm run publish
+              run: npm run publish # Replaced make with publish so Electron Forge uploads to GitHub
