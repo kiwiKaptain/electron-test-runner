@@ -1,9 +1,9 @@
 # Playwright Test Runner
 
-![Playwright Test Runner](image-1.png)
-
 An Electron-based desktop application for executing automated tests using [Playwright](https://playwright.dev/).
 The application provides a simple interface to configure a website, user credentials, select a test case, execute the test, and view the generated test report.
+
+![Playwright Test Runner](image-1.png)
 
 ## Features
 
